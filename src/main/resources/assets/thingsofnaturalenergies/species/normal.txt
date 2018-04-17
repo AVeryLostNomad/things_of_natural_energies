@@ -3,3 +3,5 @@ health=3.0
 GrowNearbyPlants
 stamina=30
 NormalSingWhenRested
+AIRandomFly
+AIReturnToGround

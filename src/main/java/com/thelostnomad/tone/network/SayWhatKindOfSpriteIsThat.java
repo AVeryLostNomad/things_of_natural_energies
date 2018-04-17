@@ -84,6 +84,7 @@ public class SayWhatKindOfSpriteIsThat implements IMessage {
                 }
             }
 
+            ThingsOfNaturalEnergies.logger.error("Here it is a " + guesstimatedNSE.getSpeciesHelper().getInternalName() + " with task number of " + guesstimatedNSE.tasks.taskEntries.size());
             TonePacketHandler.sendTo(new WhyThatsASprite(message.whereSing, guesstimatedNSE.getSpeciesHelper().getInternalName()), player);
         }
 

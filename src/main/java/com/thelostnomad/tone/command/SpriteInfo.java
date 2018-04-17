@@ -8,6 +8,7 @@ import com.thelostnomad.tone.util.ChatUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
@@ -51,7 +52,10 @@ public class SpriteInfo extends CommandBase {
                     return true;
                 }
             })){
-                ChatUtil.sendChat(player, "That sprite has species helper of val {" + nse.getSpeciesHelper().getInternalName() + "}");
+                ChatUtil.sendChat(player, "That sprite has species helper of val {" + nse.getSpeciesHelper().getInternalName() + "} (" + nse.tasks.taskEntries.size() + ")");
+                for(EntityAITasks.EntityAITaskEntry taskEntry : nse.tasks.taskEntries){
+                    ChatUtil.sendChat(player, " -> " + taskEntry.action.getClass().getCanonicalName());
+                }
             }
         }
     }

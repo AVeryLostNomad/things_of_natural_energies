@@ -184,7 +184,7 @@ public class SpeciesHelper {
         for(String s : traitList){
             EntityAIBase base = TraitHelper.deserializeAI(entity, s);
 
-            ThingsOfNaturalEnergies.logger.error("Loading " + base.getClass().getCanonicalName());
+            //ThingsOfNaturalEnergies.logger.error("Loading " + base.getClass().getCanonicalName());
 
             if(base == null) continue;
 

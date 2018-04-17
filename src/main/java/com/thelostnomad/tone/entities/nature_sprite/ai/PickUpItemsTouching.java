@@ -33,7 +33,7 @@ public class PickUpItemsTouching extends NatureSpriteAI
     }
 
     private List<EntityItem> getItemsNearby(){
-        List<Entity> list1 = this.parentEntity.world.getEntitiesWithinAABBExcludingEntity(this.parentEntity, parentEntity.getEntityBoundingBox().grow(0.25D));
+        List<Entity> list1 = this.parentEntity.world.getEntitiesWithinAABBExcludingEntity(this.parentEntity, parentEntity.getEntityBoundingBox().grow(0.75D));
         List<EntityItem> toReturn = new ArrayList<>();
         for(Entity e : list1){
             if(e instanceof EntityItem){
@@ -65,7 +65,6 @@ public class PickUpItemsTouching extends NatureSpriteAI
     {
         if(this.parentEntity.isResting()) return false;
         if(!getItemsNearby().isEmpty() && canHoldMore()){
-            ThingsOfNaturalEnergies.logger.error("I can hold more and there are items near here");
             return true;
         }
         return false;
@@ -74,6 +73,9 @@ public class PickUpItemsTouching extends NatureSpriteAI
     private boolean canHoldMore(){
         for(int i = 0; i < this.carryCapacity; i++){
             ItemStack stack = parentEntity.getHeldItemstacks()[i];
+            if(stack == null){
+                return true;
+            }
             if(stack.isEmpty()){
                 return true;
             }
@@ -92,6 +94,9 @@ public class PickUpItemsTouching extends NatureSpriteAI
     public int getFirstNonemptyStack(){
         for(int i = 0; i < this.carryCapacity; i++){
             ItemStack stack = parentEntity.getHeldItemstacks()[i];
+            if(stack == null){
+                return i;
+            }
             if(stack.isEmpty()){
                 return i;
             }
@@ -110,6 +115,7 @@ public class PickUpItemsTouching extends NatureSpriteAI
             held[getFirstNonemptyStack()] = is;
             parentEntity.setHeldItemstacks(held);
             ThingsOfNaturalEnergies.logger.error("I picked up an item!");
+            this.parentEntity.setStamina(this.parentEntity.getStamina() - getActionCost());
             ei.setDead();
             break;
         }

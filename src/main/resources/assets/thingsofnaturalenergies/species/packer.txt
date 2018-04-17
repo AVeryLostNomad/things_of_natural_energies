@@ -3,4 +3,8 @@ health=3.0
 stamina=70
 PickUpItemsTouching
 NavigateTowardsDroppedItems
-DebugIAmA
+NavigateTowardsTargetPlayerWhenFull
+DropItemsToPlayerTouching
+SelectTargetPlayerIfNone
+TeleportIfPlayerIsTooFar
+NavigateAroundTargetPlayer

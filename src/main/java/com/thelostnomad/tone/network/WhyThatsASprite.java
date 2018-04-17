@@ -85,8 +85,9 @@ public class WhyThatsASprite implements IMessage {
                 }
             }
 
+
+            //closest.reload(closest.world, sh); We probably don't need this clientside. We just want the texture
             closest.setSpeciesHelper(sh);
-            closest.reload();
             ClientProxy.lastAskedAbout.remove(largestIndex);
         }
     }

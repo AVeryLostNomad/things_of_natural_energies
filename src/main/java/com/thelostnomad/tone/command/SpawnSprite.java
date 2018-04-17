@@ -57,7 +57,7 @@ public class SpawnSprite extends CommandBase {
             player.world.spawnEntity(nse);
             nse.setPositionAndUpdate(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
 
-            TonePacketHandler.sendToServer(new SayWhatKindOfSpriteIsThat(nse.getPosition()));
+//            TonePacketHandler.sendToServer(new SayWhatKindOfSpriteIsThat(nse.getPosition()));
         }
     }
 

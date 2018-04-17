@@ -25,6 +25,8 @@ import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -59,13 +61,15 @@ public class NatureSpriteEntity extends EntityFlying {
 
     private ItemStack[] heldItemstacks;
 
+    public Map<String, Object> flags = new HashMap<String, Object>();
+
     public NatureSpriteEntity(World worldIn) {
         this(worldIn, SpeciesHelper.NATURE_SPRITE);
     }
 
     public NatureSpriteEntity(World worldIn, SpeciesHelper species){
         super(worldIn);
-        this.setSize(0.25F, 0.25F);
+        this.setSize(0.5F, 0.5F);
         this.isImmuneToFire = true;
         this.moveHelper = new NatureSpriteEntity.SpriteMoveHelper(this);
         this.speciesHelper = species;
@@ -75,16 +79,25 @@ public class NatureSpriteEntity extends EntityFlying {
         applyEntityAttributes();
     }
 
+    public boolean getAlwaysRenderNameTag(){
+        return false;
+    }
+
     // This method called when the creature's species has just been set
-    public void reload(){
+    public void reload(World world, SpeciesHelper newSpecies){
+        ThingsOfNaturalEnergies.logger.error("I was a " + speciesHelper.getInternalName() + " but am updating to " + newSpecies.getInternalName());
+        this.updateBlocked = true;
+        this.speciesHelper = newSpecies;
         // Clear tasks
         List<EntityAIBase> toRemove = new ArrayList<EntityAIBase>();
+        ThingsOfNaturalEnergies.logger.error("Task size before: " + tasks.taskEntries.size());
         for(EntityAITasks.EntityAITaskEntry task : tasks.taskEntries){
             toRemove.add(task.action);
         }
         for(EntityAIBase eai : toRemove){
             tasks.removeTask(eai);
         }
+        ThingsOfNaturalEnergies.logger.error("Task size after: " + tasks.taskEntries.size());
         toRemove.clear();
         for(EntityAITasks.EntityAITaskEntry task : targetTasks.taskEntries){
             toRemove.add(task.action);
@@ -92,23 +105,87 @@ public class NatureSpriteEntity extends EntityFlying {
         for(EntityAIBase eai : toRemove){
             targetTasks.removeTask(eai);
         }
+        ThingsOfNaturalEnergies.logger.error("Going on in");
         initEntityAI();
         heldItemstacks = new ItemStack[27];
 
-        try {
-            Field f = this.getClass().getDeclaredField("attributeMap");
-            f.setAccessible(true);
-            f.set(this, null);
-        }catch(Exception e){
-            // Oops?
-        }
+        /**
+         *
+         this.dataManager = new EntityDataManager(this);
+         this.dataManager.register(FLAGS, Byte.valueOf((byte)0));
+         this.dataManager.register(AIR, Integer.valueOf(300));
+         this.dataManager.register(CUSTOM_NAME_VISIBLE, Boolean.valueOf(false));
+         this.dataManager.register(CUSTOM_NAME, "");
+         this.dataManager.register(SILENT, Boolean.valueOf(false));
+         this.dataManager.register(NO_GRAVITY, Boolean.valueOf(false));
+         */
+
+//        this.dataManager = new EntityDataManager(this);
+//        this.dataManager.register(FLAGS, Byte.valueOf((byte)0));
+//
+//        try {
+//            Field f = this.getClass().getDeclaredField("attributeMap");
+//            f.setAccessible(true);
+//            f.set(this, null);
+//
+//            registerDataManagerField("AIR", Integer.valueOf(300));
+//            registerDataManagerField("CUSTOM_NAME_VISIBLE", Boolean.valueOf(false));
+//            registerDataManagerField("CUSTOM_NAME", "");
+//            registerDataManagerField("SILENT", false);
+//            registerDataManagerField("NO_GRAVITY", Boolean.valueOf(false));
+//        }catch(Exception e){
+//            // Oops?
+//        }
         this.stamina = speciesHelper.getStamina();
+        this.firstUpdate = true;
 
         applyEntityAttributes();
+        this.entityInit();
+        this.updateBlocked = false;
+    }
+
+    private void registerDataManagerField(String field, Object value){
+        try {
+            Field cnameVis = this.getClass().getDeclaredField(field);
+            cnameVis.setAccessible(true);
+            DataParameter param = (DataParameter) cnameVis.get(null);
+            if(param == null){
+                ThingsOfNaturalEnergies.logger.error("Is param null? " + (param == null));
+            }
+            this.dataManager.register((DataParameter) cnameVis.get(null), value);
+        }catch(Exception e){
+            // Double oops?
+            e.printStackTrace();
+        }
+    }
+
+    public boolean getTargetPlayerIsOnline(){
+        if(flags.containsKey("targetPlayer")){
+            if(getTargetPlayer() != null){
+                if(getTargetPlayer().getPosition() != null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public EntityPlayer getTargetPlayer(){
+        List<EntityPlayer> target = world.getEntities(EntityPlayer.class, new Predicate<EntityPlayer>() {
+            @Override
+            public boolean apply(@Nullable EntityPlayer input) {
+                return input.getDisplayName().equals(flags.get("targetPlayer"));
+            }
+        });
+        return target.get(0);
     }
 
     public ItemStack[] getHeldItemstacks() {
         return heldItemstacks;
+    }
+
+    public void setHeld(int slot, ItemStack to){
+        this.heldItemstacks[slot] = to;
     }
 
     public void setHeldItemstacks(ItemStack[] heldItemstacks) {
@@ -133,7 +210,11 @@ public class NatureSpriteEntity extends EntityFlying {
 
     @Override
     protected void entityInit() {
-        super.entityInit();
+        try{
+            super.entityInit();
+        }catch(IllegalArgumentException e){
+            return;
+        }
         //this.getDataManager().register(ARMS_RAISED, Boolean.valueOf(false));
     }
 
@@ -165,15 +246,15 @@ public class NatureSpriteEntity extends EntityFlying {
             return;
         }
 
-        this.tasks.addTask(6, new NatureSpriteEntity.AIReturnToGround(this));
-        this.tasks.addTask(5, new NatureSpriteEntity.AIRandomFly(this));
         this.tasks.addTask(5, new NatureSpriteEntity.AISleepWhenTired(this));
 //        this.tasks.addTask(2, new EntityAIWeirdZombieAttack(this, 1.0D, false));
 //        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
 //        this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 //        this.tasks.addTask(8, new EntityAILookIdle(this));
+        ThingsOfNaturalEnergies.logger.error("Applying species AI of " + speciesHelper.getInternalName());
         speciesHelper.applyAI(this, this.tasks);
+        ThingsOfNaturalEnergies.logger.error("Afterwards, size of tasks is " + this.tasks.taskEntries.size());
     }
 
     @Override
@@ -289,116 +370,12 @@ public class NatureSpriteEntity extends EntityFlying {
         return false;
     }
 
-    static class AIReturnToGround extends EntityAIBase
-    {
-        private final NatureSpriteEntity parentEntity;
-
-        public AIReturnToGround(NatureSpriteEntity ghast)
-        {
-            this.parentEntity = ghast;
-            this.setMutexBits(1);
-        }
-
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
-        public boolean shouldExecute()
-        {
-            if(parentEntity.resting) return false;
-            int limit = MobUtil.getGroundHeight(this.parentEntity);
-            if(this.parentEntity.posY > (MobUtil.getGroundHeight(parentEntity) + 5)){
-                return true;
-            }else{
-                parentEntity.navigatingDown = false;
-                return false;
-            }
-        }
-
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
-        public boolean shouldContinueExecuting()
-        {
-            return false;
-        }
-
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
-        public void startExecuting()
-        {
-            if(parentEntity.getMoveHelper().isUpdating()){
-                ((SpriteMoveHelper) parentEntity.getMoveHelper()).setWait();
-            }
-            parentEntity.navigatingDown = true;
-            Random random = this.parentEntity.getRNG();
-            double d0 = this.parentEntity.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-            double d1 = this.parentEntity.posY - 0.2;
-            double d2 = this.parentEntity.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-            this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
-        }
+    public boolean isNavigatingDown() {
+        return navigatingDown;
     }
 
-    static class AIRandomFly extends EntityAIBase
-    {
-        private final NatureSpriteEntity parentEntity;
-
-        public AIRandomFly(NatureSpriteEntity ghast)
-        {
-            this.parentEntity = ghast;
-            this.setMutexBits(1);
-        }
-
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
-        public boolean shouldExecute()
-        {
-            if(parentEntity.resting){
-                return false;
-            }
-            if(parentEntity.navigatingDown){
-                return false;
-            }
-            if(this.parentEntity.posY > (MobUtil.getGroundHeight(parentEntity) + 5)){
-                return false;
-            }
-            EntityMoveHelper entitymovehelper = this.parentEntity.getMoveHelper();
-
-            if (!entitymovehelper.isUpdating())
-            {
-                return true;
-            }
-            else
-            {
-                double d0 = entitymovehelper.getX() - this.parentEntity.posX;
-                double d1 = entitymovehelper.getY() - this.parentEntity.posY;
-                double d2 = entitymovehelper.getZ() - this.parentEntity.posZ;
-                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                return d3 < 1.0D || d3 > 500.0D;
-            }
-        }
-
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
-        public boolean shouldContinueExecuting()
-        {
-            return false;
-        }
-
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
-        public void startExecuting()
-        {
-            Random random = this.parentEntity.getRNG();
-            double d0 = this.parentEntity.posX + (double)((random.nextFloat() * 2.0F - 1.0F) * 4.0F);
-            double d1 = this.parentEntity.posY + (double)((random.nextFloat() * 2.0F - 1.0F) * 4.0F);
-            double d2 = this.parentEntity.posZ + (double)((random.nextFloat() * 2.0F - 1.0F) * 4.0F);
-            if(d1 > (MobUtil.getGroundHeight(this.parentEntity) + 5)) d1 = this.parentEntity.posY;
-            this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 1.0D);
-        }
+    public void setNavigatingDown(boolean navigatingDown) {
+        this.navigatingDown = navigatingDown;
     }
 
     static class AISleepWhenTired extends EntityAIBase
@@ -418,6 +395,7 @@ public class NatureSpriteEntity extends EntityFlying {
         public boolean shouldExecute()
         {
             if(parentEntity.stamina < (this.parentEntity.speciesHelper.getStamina() * 0.25)){
+                ThingsOfNaturalEnergies.logger.error("I want to start resting");
                 parentEntity.resting = true;
                 return true;
             }
@@ -496,7 +474,7 @@ public class NatureSpriteEntity extends EntityFlying {
         this.resting = resting;
     }
 
-    static class SpriteMoveHelper extends EntityMoveHelper
+    public static class SpriteMoveHelper extends EntityMoveHelper
     {
         private final NatureSpriteEntity parentEntity;
         private int courseChangeCooldown;

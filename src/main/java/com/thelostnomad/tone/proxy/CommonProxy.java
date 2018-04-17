@@ -195,6 +195,18 @@ public class CommonProxy {
     }
 
     @SubscribeEvent
+    public static void entityEnterWorld(EntityJoinWorldEvent event){
+        if(event.getWorld().isRemote) return;
+        Entity e = event.getEntity();
+        if(!(e instanceof NatureSpriteEntity)){
+            return;
+        }
+        NatureSpriteEntity nse = (NatureSpriteEntity) e;
+        // Server side reload the entity to get its AI right.
+        nse.reload(nse.world, nse.getSpeciesHelper());
+    }
+
+    @SubscribeEvent
     public static void breakBlock(BlockEvent.BreakEvent event){
         if(event.getWorld().isRemote) return; // We don't need to do a thing clientside.
 
