@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "blocks/planks_oak"
+    },
+    "model": "thingsofnaturalenergies:roots_model",
+    "uvlock": false
+  },
+  "variants": {
+  }
+}

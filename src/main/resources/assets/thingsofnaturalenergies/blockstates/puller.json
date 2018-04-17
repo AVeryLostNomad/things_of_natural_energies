@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "blocks/planks_oak"
+    },
+    "uvlock": false
+  },
+  "variants": {
+    "facing=north": { "model": "thingsofnaturalenergies:puller_model" },
+    "facing=south": { "model": "thingsofnaturalenergies:puller_model", "y": 180 },
+    "facing=west":  { "model": "thingsofnaturalenergies:puller_model", "y": 270 },
+    "facing=east":  { "model": "thingsofnaturalenergies:puller_model", "y": 90 },
+    "facing=up":  { "model": "thingsofnaturalenergies:up_puller_model" },
+    "facing=down":  { "model": "thingsofnaturalenergies:down_puller_model" }
+  }
+}

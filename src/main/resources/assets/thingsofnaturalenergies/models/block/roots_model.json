@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "thingsofnaturalenergies:blocks/roots",
+    "up": "thingsofnaturalenergies:blocks/roots",
+    "north": "thingsofnaturalenergies:blocks/roots",
+    "east": "thingsofnaturalenergies:blocks/roots",
+    "south": "thingsofnaturalenergies:blocks/roots",
+    "west": "thingsofnaturalenergies:blocks/roots"
+  }
+}

@@ -1,0 +1,29 @@
+#Sentient tree blocks
+tile.thingsofnaturalenergies.sentient_core.name=Sentient Tree Core
+tile.thingsofnaturalenergies.roots.name=Life Infused Roots
+tile.thingsofnaturalenergies.puller.name=Puller
+tile.thingsofnaturalenergies.pusher.name=Pusher
+tile.thingsofnaturalenergies.sentient_leaves.name=Sentient Leaves
+tile.thingsofnaturalenergies.sentient_log.name=Sentient Log
+tile.thingsofnaturalenergies.living_crafting_station.name=Living Crafting Station
+tile.thingsofnaturalenergies.sentient_sapling.name=Sentient Sapling
+
+tile.thingsofnaturalenergies.storagehollow_basic.name=Basic Storage Hollow
+tile.thingsofnaturalenergies.fluidhollow_basic.name=Basic Fluid Hollow
+
+#Berry blocks
+tile.thingsofnaturalenergies.berry_hasto.name=Hastoberry Fruit
+tile.thingsofnaturalenergies.berry_funco.name=Funcoberry Fruit
+tile.thingsofnaturalenergies.berry_gluto.name=Glutoberry Fruit
+
+#Berry items
+item.thingsofnaturalenergies.berry_hasto_item.name=Hastoberries
+item.thingsofnaturalenergies.berry_funco_item.name=Funcoberries
+item.thingsofnaturalenergies.berry_gluto_item.name=Glutoberries
+
+# Other mod items
+#item.thingsofnaturalenergies.shard_of_sentience.name=Shard of Sentience
+
+# Other mod factors
+itemGroup.thingsofnaturalenergies=Things of Natural Energies
+

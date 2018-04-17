@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "blocks/planks_oak"
+    },
+    "model": "thingsofnaturalenergies:sentient_log_model",
+    "uvlock": false
+  },
+  "variants": {
+    "axis=y":    { "model": "thingsofnaturalenergies:sentient_log_model" },
+    "axis=z":     { "model": "thingsofnaturalenergies:sentient_log_model", "x": 90 },
+    "axis=x":     { "model": "thingsofnaturalenergies:sentient_log_model", "x": 90, "y": 90 },
+    "axis=none":   { "model": "thingsofnaturalenergies:sentient_log_model" }
+  }
+}

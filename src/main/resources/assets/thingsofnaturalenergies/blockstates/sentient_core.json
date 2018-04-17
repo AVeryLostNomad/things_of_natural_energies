@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "blocks/planks_oak"
+    },
+    "model": "thingsofnaturalenergies:sentient_core_model.json",
+    "uvlock": false
+  },
+  "variants": {
+    "normal": [{
+
+    }],
+    "inventory": [{
+
+    }]
+  }
+}

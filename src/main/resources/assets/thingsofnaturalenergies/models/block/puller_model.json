@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "thingsofnaturalenergies:blocks/sentient_log_top",
+    "front": "thingsofnaturalenergies:blocks/puller_front",
+    "side": "thingsofnaturalenergies:blocks/puller_side"
+  }
+}

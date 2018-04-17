@@ -1,0 +1,9 @@
+{greedySprite}
+health=4.0
+GrowNearbyPlants(75)
+stamina=32
+>
+normal
+&ConditionRain(true)
+&ConditionGoldNearby(8)
+>

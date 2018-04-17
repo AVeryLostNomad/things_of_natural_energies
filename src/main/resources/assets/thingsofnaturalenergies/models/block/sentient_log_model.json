@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "thingsofnaturalenergies:blocks/sentient_log_top",
+    "up": "thingsofnaturalenergies:blocks/sentient_log_top",
+    "north": "thingsofnaturalenergies:blocks/sentient_log_side",
+    "east": "thingsofnaturalenergies:blocks/sentient_log_side",
+    "south": "thingsofnaturalenergies:blocks/sentient_log_side",
+    "west": "thingsofnaturalenergies:blocks/sentient_log_side"
+  }
+}

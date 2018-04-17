@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "thingsofnaturalenergies:blocks/sentient_log_top",
+    "up": "thingsofnaturalenergies:blocks/sentient_log_top",
+    "north": "thingsofnaturalenergies:blocks/basic_storage_hollow_full",
+    "east": "thingsofnaturalenergies:blocks/basic_storage_hollow_full",
+    "south": "thingsofnaturalenergies:blocks/basic_storage_hollow_full",
+    "west": "thingsofnaturalenergies:blocks/basic_storage_hollow_full"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "blocks/planks_oak"
+    },
+    "model": "thingsofnaturalenergies:berry_hasto_model",
+    "uvlock": false
+  },
+  "variants": {
+    "normal": [{
+
+    }],
+    "inventory": [{
+
+    }]
+  }
+}

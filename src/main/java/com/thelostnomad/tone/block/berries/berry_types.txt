@@ -1,0 +1,60 @@
+
+**************************
+* General Tree Functions *
+**************************
+
+[IB] Hastoberries - As a block, speeds tickrate of sentient trees.
+               As an item (break w/o shears) gives speed 2 for 30 seconds on consumption.
+               TODO As a potion/pool (brewed through seeping alchemy), gives speed 1 for 5 minutes or 3 for 1 minute.
+               Grow in a desert to have a chance at getting a hasto berry. (2% per leaf in desert/desert hills)
+Luxoberries -  As a block, gives a chance to double (also, separately, odds to triple) an ore item on FIRST pull into the system. High life/tick cost
+               As an item (break w/o shears) gives silk touch for 30 seconds.
+               TODO As a potion/pool (brewed through seeping alchemy), gives silk touch for 5 minutes or imbues an item with silk touch
+               Grow in the end to have a chance at getting a luxoberry. (0.5% per leaf in end biome)
+Lumoberries -  As a block, makes the tree light up the local area by periodically spawning a torch.
+               As an item (break w/o shears) gives night vision for 30 seconds.
+               TODO as a potion/pool (brewed through seeping alchemy), gives night vision for 5 minutes or (as a pool) can be used as liquid fuel for the day engine <multiblock pending. Sets it to perpetual day>
+               Grow in a dark oak forest to get these.
+[IB]Glutoberries - As a block, makes the tree consume food tossed on the ground near a root block as a substitute for life. More glutoberries = more life
+               As an item (break w/o shears) gives full saturation, instantly.
+               TODO as a potion/pool (brewed through seeping alchemy), gives never hungry for 5 minutes or (as a pool) negates hunger drain entirely.
+               Grow in any biome containing "Taiga" to obtain
+Voroberry -    As a block, makes the tree consume literally every ounce of life given to it, instead of the default (to the lowest point)
+               This means that farmland will not be reduced to the lowest growth level, but instead completely devoured.
+               Animals will not be left with one hp, but rather killed outright. Drops will be *CONVERTED TO EXTRA LIFE*
+               instead of dropped like a mobfarm. (Noxicberries are for that functionality)
+               You need one voroberry per root block on your tree, otherwise the outer few won't be affected.
+               As an item, gives increased saturation and hunger refil on food items for 5 minutes
+               A tree will immediately suck up this essence if put into a seeping alchemy process, so it is not possible to make the pool form.
+               Grow in the nether to have a chance at this item. (Again, low chance)
+[IB] Funcoberry -   Makes the tree draw one more item at a time. (From multiple stacks, that is)
+               27 funcoberries will have the tree draw simultaneously from all stacks in a chest. Can be extended to other inventories.
+               Adds a multiplier on the cost for each action, so with one funcoberry, each action (pulling two items, for example, will cost double (400 instead of 200))
+               Three berries = (600 instead of 200) because it pulls three items, etc...
+
+*****************************
+* Autocrafting with berries *
+*****************************
+
+Recoberry -    Complement to craftoberry, will allow for you to specify recipes that override the base level ones. A
+               craftoberry can only see the most basic of recipes for any given crafting operation (the first one to be defined)
+               but this berry can define an override that will always be seen first and will always be tried first)
+               One needed per recipe you wish to override
+               Any time a recoberry is used in crafting, ten thousand life is deducted immediately - per use.
+Craftoberry -  Special type of berry.
+               These are required for your tree to do any sort of autocrafting. Unfortunately, they are rather primitive.
+               Craftoberries must be allocated based on the complexity of your desired autocraft.
+               For example, let's say that I want to have my tree make enchantment tables (vanilla ones) but I don't have
+               them in my system. I do, however, have a ton of sugar canes in there, obsidian, and even diamond blocks.
+               Can I craft it? Sure, but it has a certain complexity value that corresponds to the number of craftoberries needed
+               to do the operation. By default, this number grows really, really fast with more complex crafts
+               (14 required for the enchantment table, 15 if you have only diamond blocks)
+               Life is also charged at a ridiculous amount proportional to the number of craftoberries involved (complexity).
+Deductoberries-Deduct all life cost, universally, per operation. Extra benefit on crafting operations, though.
+               Each deductoberry will lessen cost by ten percent, down to a minimum of 50% discount on crafting operations and
+               25% discount on other operations. These grow only in mooshroom biomes, also.
+Simploberries- Each simploberry counts as two tenths of a point of automatic complexity deduction. Twenty simploberries means - 10 complexity,
+               which could really help cost and number of craftoberries needed. Sixty would be - 30 complexity, which is enough to render many crafting recipes
+               "free" in that they have zero complexity. (NOTE: Autocrafting still does require at least one craftoberry to be present, but a craft of zero
+               complexity will not incur a life cost).
+
