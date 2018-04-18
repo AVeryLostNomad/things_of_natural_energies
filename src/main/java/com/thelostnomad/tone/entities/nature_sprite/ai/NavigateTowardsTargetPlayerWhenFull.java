@@ -43,6 +43,7 @@ public class NavigateTowardsTargetPlayerWhenFull extends NatureSpriteAI
         if(this.parentEntity.isResting()) return false;
         if(!canHoldMore() && parentEntity.flags.containsKey("targetPlayer") && parentEntity.getTargetPlayerIsOnline()){
             if(isTargetInventoryFull()) return false;
+            if(parentEntity.flags.containsKey("collecting")) return false;
             return true;
         }
         return false;

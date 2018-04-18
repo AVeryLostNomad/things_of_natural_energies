@@ -30,6 +30,9 @@ public class AIRandomFly extends NatureSpriteAI
         if(parentEntity.isNavigatingDown()){
             return false;
         }
+        if(parentEntity.flags.containsKey("gold")){
+            return false;
+        }
         if(this.parentEntity.posY > (MobUtil.getGroundHeight(parentEntity) + 5)){
             return false;
         }

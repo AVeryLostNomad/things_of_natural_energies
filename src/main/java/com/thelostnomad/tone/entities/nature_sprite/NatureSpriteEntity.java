@@ -69,7 +69,7 @@ public class NatureSpriteEntity extends EntityFlying {
 
     public NatureSpriteEntity(World worldIn, SpeciesHelper species){
         super(worldIn);
-        this.setSize(0.5F, 0.5F);
+        this.setSize(0.8F, 0.8F);
         this.isImmuneToFire = true;
         this.moveHelper = new NatureSpriteEntity.SpriteMoveHelper(this);
         this.speciesHelper = species;

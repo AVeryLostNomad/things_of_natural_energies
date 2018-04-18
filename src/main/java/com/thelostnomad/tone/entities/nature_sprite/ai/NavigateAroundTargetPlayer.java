@@ -26,6 +26,7 @@ public class NavigateAroundTargetPlayer extends NatureSpriteAI
         if(parentEntity.isResting()){
             return false;
         }
+        if(parentEntity.flags.containsKey("collecting")) return false;
         if(!parentEntity.flags.containsKey("targetPlayer") || !parentEntity.getTargetPlayerIsOnline()){
             return false;
         }
@@ -60,7 +61,7 @@ public class NavigateAroundTargetPlayer extends NatureSpriteAI
     {
         Random random = this.parentEntity.getRNG();
         double d0 = parentEntity.getTargetPlayer().getPosition().getX() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
-        double d1 = parentEntity.getTargetPlayer().getPosition().getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
+        double d1 = parentEntity.getTargetPlayer().getPosition().getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F) + 1;
         double d2 = parentEntity.getTargetPlayer().getPosition().getZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
         this.parentEntity.getMoveHelper().setMoveTo(d0, d1, d2, 2.0D);
     }

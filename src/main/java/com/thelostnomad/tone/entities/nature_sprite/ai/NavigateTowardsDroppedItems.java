@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import com.thelostnomad.tone.ThingsOfNaturalEnergies;
 import com.thelostnomad.tone.entities.nature_sprite.NatureSpriteEntity;
 import com.thelostnomad.tone.util.annotation.SpriteAI;
+import com.thelostnomad.tone.util.crafting.StackUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -44,11 +45,15 @@ public class NavigateTowardsDroppedItems extends NatureSpriteAI
      */
     public boolean shouldExecute()
     {
-        if(this.parentEntity.isResting()) return false;
+        if(this.parentEntity.isResting()){
+            if(parentEntity.flags.containsKey("collecting")) parentEntity.flags.remove("collecting");
+            return false;
+        }
         if(getClosestItem() != null && canHoldMore()){
-            ThingsOfNaturalEnergies.logger.error("We're heading that way");
+            parentEntity.flags.put("collecting", true);
             return true;
         }
+        if(parentEntity.flags.containsKey("collecting")) parentEntity.flags.remove("collecting");
         return false;
     }
 
@@ -60,6 +65,13 @@ public class NavigateTowardsDroppedItems extends NatureSpriteAI
             }
             if(stack.isEmpty()){
                 return true;
+            }
+            if(getClosestItem() != null){
+                if(StackUtil.stacksEqual(stack, getClosestItem().getItem())){
+                    if(stack.getCount() + getClosestItem().getItem().getCount() < stack.getMaxStackSize()){
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -96,7 +108,6 @@ public class NavigateTowardsDroppedItems extends NatureSpriteAI
      */
     public void startExecuting()
     {
-        BlockPos target = getClosestItem().getPosition();
-        this.parentEntity.getMoveHelper().setMoveTo(target.getX(), target.getY() + 1, target.getZ(), 1.0d);
+        this.parentEntity.getMoveHelper().setMoveTo(getClosestItem().posX, getClosestItem().posY + 0.75, getClosestItem().posZ, 1.75d);
     }
 }
