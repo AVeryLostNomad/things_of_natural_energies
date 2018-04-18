@@ -49,6 +49,7 @@ public class ModModelManager {
         registerItemModel(ModItems.natureSpriteBaseItem, "thingsofnaturalenergies:nature_sprite_base");
         registerItemModel(ModItems.greedySprite, "thingsofnaturalenergies:greedy_sprite_base");
         registerItemModel(ModItems.packerSprite, "thingsofnaturalenergies:packer_sprite_base");
+        registerItemModel(ModItems.voidSprite, "thingsofnaturalenergies:void_sprite_base");
     }
 
     private void registerFluidModels() {

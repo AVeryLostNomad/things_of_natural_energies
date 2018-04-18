@@ -23,5 +23,6 @@ public class ModItems {
     public static NatureSpriteItem natureSpriteBaseItem = new NatureSpriteItem("nature_sprite_base");
     public static NatureSpriteItem greedySprite = new NatureSpriteItem("greedy_sprite");
     public static NatureSpriteItem packerSprite = new NatureSpriteItem("packer_sprite");
+    public static NatureSpriteItem voidSprite = new NatureSpriteItem("void_sprite");
 
 }

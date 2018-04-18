@@ -1,0 +1,6 @@
+{voidSprite}
+health=3.0
+stamina=20
+PickUpItemsTouching
+NavigateTowardsDroppedItems
+AIRandomFly

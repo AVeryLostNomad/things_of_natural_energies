@@ -186,6 +186,7 @@ public class CommonProxy {
         event.getRegistry().register(ModItems.natureSpriteBaseItem);
         event.getRegistry().register(ModItems.greedySprite);
         event.getRegistry().register(ModItems.packerSprite);
+        event.getRegistry().register(ModItems.voidSprite);
 
         for(IToneIntegration integration : toneIntegrations){
             if(Loader.isModLoaded(integration.getIntegrationModid())){

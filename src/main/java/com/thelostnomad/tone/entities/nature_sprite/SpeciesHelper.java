@@ -36,6 +36,7 @@ public class SpeciesHelper {
     public static final SpeciesHelper NATURE_SPRITE = new SpeciesHelper("normal");
     public static final SpeciesHelper GREEDY_SPRITE = new SpeciesHelper("greedy");
     public static final SpeciesHelper PACKER_SPRITE = new SpeciesHelper("packer");
+    public static final SpeciesHelper VOID_SPRITE = new SpeciesHelper("void");
 
     private String thisSpeciesFile;
     private boolean isValid = true;
