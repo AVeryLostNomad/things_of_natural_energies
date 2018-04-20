@@ -4,3 +4,10 @@ stamina=20
 PickUpItemsTouching
 NavigateTowardsDroppedItems
 AIRandomFly
+VoidHeldItems
+>
+normal
+greedy
+&ConditionRain(false)
+&ConditionItemNearby(8)
+>

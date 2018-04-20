@@ -3,6 +3,7 @@ package com.thelostnomad.tone.entities.nature_sprite.ai;
 import com.google.common.base.Predicate;
 import com.thelostnomad.tone.ThingsOfNaturalEnergies;
 import com.thelostnomad.tone.entities.nature_sprite.NatureSpriteEntity;
+import com.thelostnomad.tone.registry.ModItems;
 import com.thelostnomad.tone.util.annotation.SpriteAI;
 import com.thelostnomad.tone.util.crafting.StackUtil;
 import net.minecraft.entity.Entity;
@@ -84,7 +85,7 @@ public class NavigateTowardsDroppedItems extends NatureSpriteAI
         for(EntityItem ei : parentEntity.world.getEntities(EntityItem.class, new Predicate<EntityItem>() {
             @Override
             public boolean apply(@Nullable EntityItem input) {
-                return input.getPosition().distanceSq(parentEntity.getPosition()) < 84;
+                return input.getPosition().distanceSq(parentEntity.getPosition()) < 84 && input.getItem().getItem() != ModItems.shardOfSentience;
             }
         })){
             if(ei.getPosition().distanceSq(this.parentEntity.getPosition()) < distance){

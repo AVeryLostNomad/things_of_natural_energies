@@ -10,3 +10,4 @@ normal
 AIRandomFly
 AIReturnToGround
 AIHoverAroundGold
+AISingWhenHoveringGold

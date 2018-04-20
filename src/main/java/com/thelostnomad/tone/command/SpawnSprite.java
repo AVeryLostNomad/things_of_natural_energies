@@ -4,15 +4,17 @@ import com.google.common.collect.Lists;
 import com.thelostnomad.tone.ThingsOfNaturalEnergies;
 import com.thelostnomad.tone.entities.nature_sprite.NatureSpriteEntity;
 import com.thelostnomad.tone.entities.nature_sprite.SpeciesHelper;
-import com.thelostnomad.tone.network.SayWhatKindOfSpriteIsThat;
 import com.thelostnomad.tone.network.TonePacketHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -52,12 +54,12 @@ public class SpawnSprite extends CommandBase {
         String type = args[0];
         if (sender instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) sender;
-            NatureSpriteEntity nse = new NatureSpriteEntity(player.world, SpeciesHelper.fromInternalName(type));
-            nse.setSpeciesHelper(SpeciesHelper.fromInternalName(type));
-            player.world.spawnEntity(nse);
-            nse.setPositionAndUpdate(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
-
-//            TonePacketHandler.sendToServer(new SayWhatKindOfSpriteIsThat(nse.getPosition()));
+            ResourceLocation rl = new ResourceLocation("thingsofnaturalenergies", "entities/nature_sprite");
+            Entity e= ItemMonsterPlacer.spawnCreature(player.world, rl, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
+            NatureSpriteEntity nse = (NatureSpriteEntity) e;
+            SpeciesHelper sh = SpeciesHelper.fromInternalName(type);
+            nse.setSpeciesHelper(sh);
+            nse.reload(player.world, sh);
         }
     }
 

@@ -12,6 +12,7 @@ import com.thelostnomad.tone.block.fluid_hollows.BasicFluidHollow;
 import com.thelostnomad.tone.block.storage_hollows.*;
 import com.thelostnomad.tone.block.tileentity.*;
 import com.thelostnomad.tone.entities.nature_sprite.NatureSpriteEntity;
+import com.thelostnomad.tone.entities.nature_sprite.SpeciesHelper;
 import com.thelostnomad.tone.integration.IToneIntegration;
 import com.thelostnomad.tone.integration.ae2.ToneAE2;
 import com.thelostnomad.tone.network.SpriteEntitySyncPacket;
@@ -55,6 +56,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,6 +190,8 @@ public class CommonProxy {
         event.getRegistry().register(ModItems.greedySprite);
         event.getRegistry().register(ModItems.packerSprite);
         event.getRegistry().register(ModItems.voidSprite);
+        event.getRegistry().register(ModItems.allegiantSprite);
+        event.getRegistry().register(ModItems.storerSprite);
 
         for(IToneIntegration integration : toneIntegrations){
             if(Loader.isModLoaded(integration.getIntegrationModid())){

@@ -70,33 +70,39 @@ public class LocalSoundCrafting {
         }
     }
 
+    public static void clearAllNearby(BlockPos where){
+        List<SoundEvent> toRemove = new ArrayList<SoundEvent>();
+        for (Map.Entry<SoundEvent, Integer> entry : SOUND_CACHE.asMap().entrySet()) {
+            if(entry.getKey().position.distanceSq(where) <= 64){
+                toRemove.add(entry.getKey());
+            }
+        }
+        for(SoundEvent to : toRemove){
+            SOUND_CACHE.invalidate(to);
+        }
+    }
+
     public static void doCraft(SongRecipe sr, World world, BlockPos where){
-        for(NatureSpriteEntity nse : singing){
+        for(NatureSpriteEntity nse : world.getEntities(NatureSpriteEntity.class, new Predicate<NatureSpriteEntity>() {
+            @Override
+            public boolean apply(@Nullable NatureSpriteEntity input) {
+                return input.getDistanceSq(where) < 64;
+            }
+        })){
             nse.setDead();
         }
+        clearAllNearby(where);
 
         for(ConditionBase cb : sr.getConditions()){
             cb.consume(world, where);
         }
 
         SpeciesHelper sh = SpeciesHelper.fromInternalName(sr.getTarget());
-        System.out.println(sh.getStamina());
         NatureSpriteEntity nse = new NatureSpriteEntity(world, SpeciesHelper.fromInternalName(sr.getTarget()));
         nse.setPosition(where.getX(), where.getY(), where.getZ());
         nse.setStamina(nse.getStamina() / 2D);
         world.spawnEntity(nse);
         // Play a sound effect indicating we got here
-        removeAllLocalSoundEvents(world, where);
-    }
-
-    private static void removeAllLocalSoundEvents(World world, BlockPos where){
-        for (Map.Entry<SoundEvent, Integer> entry : SOUND_CACHE.asMap().entrySet()) {
-            if(entry.getKey().world == world){
-                if(entry.getKey().position.distanceSq(where.getX(), where.getY(), where.getZ()) <= 64){
-                    SOUND_CACHE.invalidate(entry.getKey());
-                }
-            }
-        }
     }
 
     public static void addSongRecipe(SongRecipe sr) {

@@ -1,0 +1,11 @@
+{allegiantSprite}
+health=6.0
+stamina=20
+SelectTargetPlayerIfNone
+TeleportIfPlayerIsTooFar
+NavigateAroundTargetPlayer
+AISingWhenNearPlayer
+>
+normal
+&ConditionStringNearby(8)
+>

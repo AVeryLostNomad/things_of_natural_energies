@@ -1,0 +1,8 @@
+{storerSprite}
+health=3.0
+stamina=70
+PickUpItemsTouching
+NavigateTowardsDroppedItems
+LookForStorageChestIfNeeded
+NavigateTowardsChestWhenFull
+DropOffItemsAtChest
